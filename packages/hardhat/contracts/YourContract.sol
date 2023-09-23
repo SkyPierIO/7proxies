@@ -22,7 +22,7 @@ contract HostContract is Ownable  {
 	// State Variables
 	mapping(address => NodeInfo) hostsToInfo;
 
-	function getHost(address host) public view returns (NodeInfo) {
+	function getHost(address host) public view returns (NodeInfo memory) {
 		return hostsToInfo[host];
 	}
 
