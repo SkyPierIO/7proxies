@@ -3,8 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
-
-// import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract HostContract is Ownable  {
 	// Events
@@ -21,10 +20,10 @@ contract HostContract is Ownable  {
 		uint users;
 	}
 	// State Variables
-	mapping(address host => NodeInfo info) hostsToInfo;
+	mapping(address => NodeInfo) hostsToInfo;
 
 	function getHost(address host) public view returns (NodeInfo) {
-		return tokenIdToInfo[host];
+		return hostsToInfo[host];
 	}
 
 	function registerAsHost(string memory nodeId) public {

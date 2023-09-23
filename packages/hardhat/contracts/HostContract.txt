@@ -6,21 +6,22 @@ import "hardhat/console.sol";
 
 // Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 /**
  * A smart contract that mints an NFT for the Node Host and get the Node Host paid 
  * @author Ting
  */
-struct NodeInfo{
-	string nodeId
-}
 
 contract HostContract is ERC721 {
 	// State Variables
 	address public immutable owner = msg.sender;
-	mapping(string tokenId => NodeInfo info) tokenIdToInfo;
+	mapping(string => NodeInfo) tokenIdToInfo;
+	struct NodeInfo{
+		string nodeId;
+	}
 
-	function getDataForTokenId(string tokenId) public view return (NodeInfo) {
+	function getDataForTokenId(string tokenId) public view returns (NodeInfo) {
 		return tokenIdToInfo[tokenId];
 	}
 
@@ -36,10 +37,10 @@ contract HostContract is ERC721 {
 		// emit: keyword used to trigger an event
 		emit ContractEvent(msg.sender, tokenId);
 
-		_mint(_owner, tokenId);
+		_mint(msg.sender, tokenId);
 		tokenIdToInfo[tokenId] = NodeInfo{
 			NodeId: 1
-		}
+		};
 		return tokenId;
 	}
 
