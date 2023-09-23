@@ -5,14 +5,14 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract HostContract is Ownable  {
+contract HostContract is Ownable {
 	// Events
 	event HostRegistered(address indexed host, string nodeId);
 	event HostUnregistered(address indexed host, string nodeId);
 	/**
-	* A smart contract that stores the hosts registered on the network
-	* @author Ting
-	*/
+	 * A smart contract that stores the hosts registered on the network
+	 * @author Ting
+	 */
 	struct NodeInfo {
 		string nodeId;
 		uint256 balance;
@@ -27,14 +27,14 @@ contract HostContract is Ownable  {
 	}
 
 	function registerAsHost(string memory nodeId) public {
-		if(!hostsToInfo[msg.sender]){
-			hostsToInfo[msg.sender] = NodeInfo(nodeId, 0, true);
+		if (!hostsToInfo[msg.sender].active) {
+			hostsToInfo[msg.sender] = NodeInfo(nodeId, 0, true, 0);
 			emit HostRegistered(msg.sender, nodeId);
 		}
 	}
 
 	function unregisterAsHost(string memory nodeId) public {
-		if(hostsToInfo[msg.sender]){
+		if (hostsToInfo[msg.sender]) {
 			hostsToInfo[msg.sender].nodeInfo = "";
 			hostsToInfo[msg.sender].active = false;
 			emit HostUnregistered(msg.sender, nodeId);
