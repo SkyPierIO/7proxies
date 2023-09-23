@@ -10,9 +10,9 @@ contract YourContract {
 	event HostRegistered(address indexed host, string nodeId);
 	event HostUnregistered(address indexed host, string nodeId);
 	/**
-	* A smart contract that stores the hosts registered on the network
-	* @author Ting
-	*/
+	 * A smart contract that stores the hosts registered on the network
+	 * @author Ting
+	 */
 	struct NodeInfo {
 		string nodeId;
 		uint256 balance;
