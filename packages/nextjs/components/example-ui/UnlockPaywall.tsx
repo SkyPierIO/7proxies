@@ -80,9 +80,9 @@ const Connect = () => {
  */
 const Checkout = ({ network }: { network: number }) => {
   const { connector } = useAccount();
-  const checkout = () => {
+  const checkout = async () => {
     const paywall = new Paywall(networks);
-    const provider = connector!.getProvider();
+    const provider = await connector!.getProvider();
     paywall.connect(provider);
     paywall.loadCheckoutModal({
       locks: {
