@@ -2,10 +2,10 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+// import "hardhat/console.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract HostContract is Ownable  {
+contract YourContract {
 	// Events
 	event HostRegistered(address indexed host, string nodeId);
 	event HostUnregistered(address indexed host, string nodeId);
@@ -20,28 +20,35 @@ contract HostContract is Ownable  {
 		uint users;
 	}
 	// State Variables
+	address public immutable owner;
 	mapping(address => NodeInfo) hostsToInfo;
+
+	// Constructor: Called once on contract deployment
+	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
+	constructor(address _owner) {
+		owner = _owner;
+	}
 
 	function getHost(address host) public view returns (NodeInfo memory) {
 		return hostsToInfo[host];
 	}
 
 	function registerAsHost(string memory nodeId) public {
-		if(!hostsToInfo[msg.sender]){
-			hostsToInfo[msg.sender] = NodeInfo(nodeId, 0, true);
+		if(!hostsToInfo[msg.sender].active){
+			hostsToInfo[msg.sender] = NodeInfo(nodeId, 0, true, 0);
 			emit HostRegistered(msg.sender, nodeId);
 		}
 	}
 
 	function unregisterAsHost(string memory nodeId) public {
-		if(hostsToInfo[msg.sender]){
-			hostsToInfo[msg.sender].nodeInfo = "";
+		if(hostsToInfo[msg.sender].active){
+			hostsToInfo[msg.sender].nodeId = "";
 			hostsToInfo[msg.sender].active = false;
 			emit HostUnregistered(msg.sender, nodeId);
 		}
 	}
 
 	function useHost(address host) public {
-		hostsToInfo.users++;
+		hostsToInfo[host].users++;
 	}
 }
