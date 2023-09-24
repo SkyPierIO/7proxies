@@ -48,6 +48,10 @@ contract YourContract {
 		}
 	}
 
+	function canBeAHost(address host) public view returns (bool) {
+		return !hostsToInfo[host].active;
+	}
+
 	function useHost(address host) public {
 		hostsToInfo[host].users++;
 	}

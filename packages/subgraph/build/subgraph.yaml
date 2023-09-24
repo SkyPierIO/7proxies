@@ -6,10 +6,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: YourContract
-    network: localhost
+    network: goerli
     source:
       abi: YourContract
-      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6"
+      address: "0x8896c31C3e8195d81e6755dAF927A63300956Ed8"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

@@ -1,19 +1,22 @@
-import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import axios from "axios";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { NextPage } from "next";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
-const Home: NextPage = () => {
-  const [newGreeting, setNewGreeting] = useState("");
+const Home: NextPage = ({ nodeId }) => {
+  console.log("id Nest", nodeId);
+  const router = useRouter();
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "YourContract",
-    functionName: "setGreeting",
-    args: [newGreeting],
-    value: "0.01",
+    functionName: "registerAsHost",
+    args: [nodeId],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+      router.push("/host");
     },
   });
 
@@ -34,7 +37,7 @@ const Home: NextPage = () => {
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   <>
-                    Send <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
+                    Go <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
                   </>
                 )}
               </button>
@@ -49,14 +52,12 @@ const Home: NextPage = () => {
           <div className="flex rounded-full border border-primary p-1 flex-shrink-0">
             <div className="flex rounded-full border-2 border-primary p-1">
               <Link href="/example-ui">
-                <button
-                  className="btn btn-primary rounded-full capitalize font-normal font-white w-24 flex items-center gap-1 hover:gap-2 transition-all tracking-widest"
-                >
+                <button className="btn btn-primary rounded-full capitalize font-normal font-white w-24 flex items-center gap-1 hover:gap-2 transition-all tracking-widest">
                   {isLoading ? (
                     <span className="loading loading-spinner loading-sm"></span>
                   ) : (
                     <>
-                      Go <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
+                      Join <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
                     </>
                   )}
                 </button>
@@ -67,6 +68,19 @@ const Home: NextPage = () => {
       </div>
     </div>
   );
+};
+
+export const getStaticProps = async context => {
+  let nodeId = "";
+  try {
+    const response = await axios.get("http://localhost:8081/api/v0/id");
+    if (response.status === 200) {
+      nodeId = response.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return { props: { nodeId } };
 };
 
 export default Home;

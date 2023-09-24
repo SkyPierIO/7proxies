@@ -5,7 +5,7 @@ const contracts = {
       name: "goerli",
       contracts: {
         YourContract: {
-          address: "0x4540a8E4f4Ce272e24c6Af5f6b51008b7C8beAE8",
+          address: "0x8896c31C3e8195d81e6755dAF927A63300956Ed8",
           abi: [
             {
               inputs: [
@@ -33,6 +33,12 @@ const contracts = {
                   name: "nodeId",
                   type: "string",
                 },
+                {
+                  indexed: false,
+                  internalType: "bool",
+                  name: "active",
+                  type: "bool",
+                },
               ],
               name: "HostRegistered",
               type: "event",
@@ -51,6 +57,12 @@ const contracts = {
                   internalType: "string",
                   name: "nodeId",
                   type: "string",
+                },
+                {
+                  indexed: false,
+                  internalType: "bool",
+                  name: "active",
+                  type: "bool",
                 },
               ],
               name: "HostUnregistered",
@@ -92,6 +104,40 @@ const contracts = {
                   internalType: "struct YourContract.NodeInfo",
                   name: "",
                   type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "hostsToInfo",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "nodeId",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "balance",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "active",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "users",
+                  type: "uint256",
                 },
               ],
               stateMutability: "view",
