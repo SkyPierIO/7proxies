@@ -14,41 +14,122 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "greetingSetter",
+        "name": "host",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "newGreeting",
+        "name": "nodeId",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "premium",
+        "name": "active",
         "type": "bool"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
       }
     ],
-    "name": "GreetingChange",
+    "name": "HostRegistered",
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "greeting",
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "host",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "active",
+        "type": "bool"
+      }
+    ],
+    "name": "HostUnregistered",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "host",
+        "type": "address"
+      }
+    ],
+    "name": "getHost",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "nodeId",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "balance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "users",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct YourContract.NodeInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "hostsToInfo",
     "outputs": [
       {
         "internalType": "string",
-        "name": "",
+        "name": "nodeId",
         "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "active",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "users",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -68,72 +149,42 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "premium",
-    "outputs": [
+    "inputs": [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "internalType": "string",
+        "name": "nodeId",
+        "type": "string"
       }
     ],
-    "stateMutability": "view",
+    "name": "registerAsHost",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "string",
-        "name": "_newGreeting",
+        "name": "nodeId",
         "type": "string"
       }
     ],
-    "name": "setGreeting",
+    "name": "unregisterAsHost",
     "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalCounter",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "host",
         "type": "address"
       }
     ],
-    "name": "userGreetingCounter",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdraw",
+    "name": "useHost",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "receive"
   }
 ]

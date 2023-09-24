@@ -1,17 +1,8 @@
-type Greeting @entity {
-  id: ID!
-  sender: Sender!
-  greeting: String!
-  premium: Boolean
-  value: BigInt
-  createdAt: BigInt!
-  transactionHash: String!
-}
-
-type Sender @entity {
+type Registration @entity {
   id: ID!
   address: Bytes!
-  greetings: [Greeting!] @derivedFrom(field: "sender")
+  nodeId: String!
   createdAt: BigInt!
-  greetingCount: BigInt!
 }
+
+

@@ -10,33 +10,112 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class GreetingChange extends ethereum.Event {
-  get params(): GreetingChange__Params {
-    return new GreetingChange__Params(this);
+export class HostRegistered extends ethereum.Event {
+  get params(): HostRegistered__Params {
+    return new HostRegistered__Params(this);
   }
 }
 
-export class GreetingChange__Params {
-  _event: GreetingChange;
+export class HostRegistered__Params {
+  _event: HostRegistered;
 
-  constructor(event: GreetingChange) {
+  constructor(event: HostRegistered) {
     this._event = event;
   }
 
-  get greetingSetter(): Address {
+  get host(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get newGreeting(): string {
+  get nodeId(): string {
     return this._event.parameters[1].value.toString();
   }
 
-  get premium(): boolean {
+  get active(): boolean {
     return this._event.parameters[2].value.toBoolean();
   }
+}
 
-  get value(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+export class HostUnregistered extends ethereum.Event {
+  get params(): HostUnregistered__Params {
+    return new HostUnregistered__Params(this);
+  }
+}
+
+export class HostUnregistered__Params {
+  _event: HostUnregistered;
+
+  constructor(event: HostUnregistered) {
+    this._event = event;
+  }
+
+  get host(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get nodeId(): string {
+    return this._event.parameters[1].value.toString();
+  }
+
+  get active(): boolean {
+    return this._event.parameters[2].value.toBoolean();
+  }
+}
+
+export class YourContract__getHostResultValue0Struct extends ethereum.Tuple {
+  get nodeId(): string {
+    return this[0].toString();
+  }
+
+  get balance(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get active(): boolean {
+    return this[2].toBoolean();
+  }
+
+  get users(): BigInt {
+    return this[3].toBigInt();
+  }
+}
+
+export class YourContract__hostsToInfoResult {
+  value0: string;
+  value1: BigInt;
+  value2: boolean;
+  value3: BigInt;
+
+  constructor(value0: string, value1: BigInt, value2: boolean, value3: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromString(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set("value2", ethereum.Value.fromBoolean(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
+    return map;
+  }
+
+  getNodeId(): string {
+    return this.value0;
+  }
+
+  getBalance(): BigInt {
+    return this.value1;
+  }
+
+  getActive(): boolean {
+    return this.value2;
+  }
+
+  getUsers(): BigInt {
+    return this.value3;
   }
 }
 
@@ -45,19 +124,70 @@ export class YourContract extends ethereum.SmartContract {
     return new YourContract("YourContract", address);
   }
 
-  greeting(): string {
-    let result = super.call("greeting", "greeting():(string)", []);
+  getHost(host: Address): YourContract__getHostResultValue0Struct {
+    let result = super.call(
+      "getHost",
+      "getHost(address):((string,uint256,bool,uint256))",
+      [ethereum.Value.fromAddress(host)]
+    );
 
-    return result[0].toString();
+    return changetype<YourContract__getHostResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
-  try_greeting(): ethereum.CallResult<string> {
-    let result = super.tryCall("greeting", "greeting():(string)", []);
+  try_getHost(
+    host: Address
+  ): ethereum.CallResult<YourContract__getHostResultValue0Struct> {
+    let result = super.tryCall(
+      "getHost",
+      "getHost(address):((string,uint256,bool,uint256))",
+      [ethereum.Value.fromAddress(host)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toString());
+    return ethereum.CallResult.fromValue(
+      changetype<YourContract__getHostResultValue0Struct>(value[0].toTuple())
+    );
+  }
+
+  hostsToInfo(param0: Address): YourContract__hostsToInfoResult {
+    let result = super.call(
+      "hostsToInfo",
+      "hostsToInfo(address):(string,uint256,bool,uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return new YourContract__hostsToInfoResult(
+      result[0].toString(),
+      result[1].toBigInt(),
+      result[2].toBoolean(),
+      result[3].toBigInt()
+    );
+  }
+
+  try_hostsToInfo(
+    param0: Address
+  ): ethereum.CallResult<YourContract__hostsToInfoResult> {
+    let result = super.tryCall(
+      "hostsToInfo",
+      "hostsToInfo(address):(string,uint256,bool,uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new YourContract__hostsToInfoResult(
+        value[0].toString(),
+        value[1].toBigInt(),
+        value[2].toBoolean(),
+        value[3].toBigInt()
+      )
+    );
   }
 
   owner(): Address {
@@ -73,59 +203,6 @@ export class YourContract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  premium(): boolean {
-    let result = super.call("premium", "premium():(bool)", []);
-
-    return result[0].toBoolean();
-  }
-
-  try_premium(): ethereum.CallResult<boolean> {
-    let result = super.tryCall("premium", "premium():(bool)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
-  totalCounter(): BigInt {
-    let result = super.call("totalCounter", "totalCounter():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_totalCounter(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("totalCounter", "totalCounter():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  userGreetingCounter(param0: Address): BigInt {
-    let result = super.call(
-      "userGreetingCounter",
-      "userGreetingCounter(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_userGreetingCounter(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "userGreetingCounter",
-      "userGreetingCounter(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 
@@ -159,58 +236,92 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class SetGreetingCall extends ethereum.Call {
-  get inputs(): SetGreetingCall__Inputs {
-    return new SetGreetingCall__Inputs(this);
+export class RegisterAsHostCall extends ethereum.Call {
+  get inputs(): RegisterAsHostCall__Inputs {
+    return new RegisterAsHostCall__Inputs(this);
   }
 
-  get outputs(): SetGreetingCall__Outputs {
-    return new SetGreetingCall__Outputs(this);
+  get outputs(): RegisterAsHostCall__Outputs {
+    return new RegisterAsHostCall__Outputs(this);
   }
 }
 
-export class SetGreetingCall__Inputs {
-  _call: SetGreetingCall;
+export class RegisterAsHostCall__Inputs {
+  _call: RegisterAsHostCall;
 
-  constructor(call: SetGreetingCall) {
+  constructor(call: RegisterAsHostCall) {
     this._call = call;
   }
 
-  get _newGreeting(): string {
+  get nodeId(): string {
     return this._call.inputValues[0].value.toString();
   }
 }
 
-export class SetGreetingCall__Outputs {
-  _call: SetGreetingCall;
+export class RegisterAsHostCall__Outputs {
+  _call: RegisterAsHostCall;
 
-  constructor(call: SetGreetingCall) {
+  constructor(call: RegisterAsHostCall) {
     this._call = call;
   }
 }
 
-export class WithdrawCall extends ethereum.Call {
-  get inputs(): WithdrawCall__Inputs {
-    return new WithdrawCall__Inputs(this);
+export class UnregisterAsHostCall extends ethereum.Call {
+  get inputs(): UnregisterAsHostCall__Inputs {
+    return new UnregisterAsHostCall__Inputs(this);
   }
 
-  get outputs(): WithdrawCall__Outputs {
-    return new WithdrawCall__Outputs(this);
+  get outputs(): UnregisterAsHostCall__Outputs {
+    return new UnregisterAsHostCall__Outputs(this);
   }
 }
 
-export class WithdrawCall__Inputs {
-  _call: WithdrawCall;
+export class UnregisterAsHostCall__Inputs {
+  _call: UnregisterAsHostCall;
 
-  constructor(call: WithdrawCall) {
+  constructor(call: UnregisterAsHostCall) {
+    this._call = call;
+  }
+
+  get nodeId(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+}
+
+export class UnregisterAsHostCall__Outputs {
+  _call: UnregisterAsHostCall;
+
+  constructor(call: UnregisterAsHostCall) {
     this._call = call;
   }
 }
 
-export class WithdrawCall__Outputs {
-  _call: WithdrawCall;
+export class UseHostCall extends ethereum.Call {
+  get inputs(): UseHostCall__Inputs {
+    return new UseHostCall__Inputs(this);
+  }
 
-  constructor(call: WithdrawCall) {
+  get outputs(): UseHostCall__Outputs {
+    return new UseHostCall__Outputs(this);
+  }
+}
+
+export class UseHostCall__Inputs {
+  _call: UseHostCall;
+
+  constructor(call: UseHostCall) {
+    this._call = call;
+  }
+
+  get host(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class UseHostCall__Outputs {
+  _call: UseHostCall;
+
+  constructor(call: UseHostCall) {
     this._call = call;
   }
 }
