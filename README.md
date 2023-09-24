@@ -1,5 +1,5 @@
 ## This is the frontend repo of a two-repo project for a decentralized Virtual Proxy Network
-# Please see https://github.com/dProxSocks/kubo-socks for the "backend" details. 
+### Please see https://github.com/dProxSocks/kubo-socks for the "backend" details. 
 
 # 🏗 Scaffold-ETH 2
 
