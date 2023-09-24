@@ -71,10 +71,12 @@ const Home: NextPage = ({ nodeId }) => {
 };
 
 export const getStaticProps = async context => {
-  let nodeId;
+  let nodeId = "";
   try {
     const response = await axios.get("http://localhost:8081/api/v0/id");
-    nodeId = response.data;
+    if (response.status === 200) {
+      nodeId = response.data;
+    }
   } catch (error) {
     console.error(error);
   }
