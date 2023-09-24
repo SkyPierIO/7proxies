@@ -9,18 +9,17 @@ dataSources:
     network: localhost
     source:
       abi: YourContract
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Greeting
-        - Sender
+        - Registration
       abis:
         - name: YourContract
           file: ./abis/localhost_YourContract.json
       eventHandlers:
-        - event: GreetingChange(indexed address,string,bool,uint256)
-          handler: handleGreetingChange
+        - event: HostRegistered(indexed address,string,bool)
+          handler: handleRegistration
       file: ./src/mapping.ts

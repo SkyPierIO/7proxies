@@ -1,17 +1,24 @@
-const nodes = [
-  {
-    name: "node 1",
-  },
-  {
-    name: "node 1",
-  },
-  {
-    name: "node 1",
-  },
-];
+// import {
+//   useScaffoldContractRead,
+// } from "~~/hooks/scaffold-eth";
+import { gql, useQuery } from "@apollo/client";
 
 export const NodeList = () => {
-  return (
+  const GREETINGS_GRAPHQL = `
+  {
+    registrations(orderBy: createdAt) {
+      address
+    	nodeId
+    }
+  }
+  `;
+
+  const GREETINGS_GQL = gql(GREETINGS_GRAPHQL);
+  const greetingsData = useQuery(GREETINGS_GQL, { pollInterval: 1000 });
+
+  return greetingsData.loading ? (
+    <div>Loading...</div>
+  ) : (
     <div className="overflow-x-auto">
       <table className="table">
         <thead>
@@ -20,19 +27,13 @@ export const NodeList = () => {
           </tr>
         </thead>
         <tbody>
-          {nodes.map((node, index) => {
+          {greetingsData.data.registrations.map((node, index) => {
             return (
               <tr key={index}>
-                <td>{node.name}</td>
+                <td>{node.nodeId}</td>
               </tr>
             );
           })}
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-          </tr>
         </tbody>
       </table>
     </div>

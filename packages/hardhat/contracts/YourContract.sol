@@ -7,8 +7,8 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract YourContract {
 	// Events
-	event HostRegistered(address indexed host, string nodeId);
-	event HostUnregistered(address indexed host, string nodeId);
+	event HostRegistered(address indexed host, string nodeId, bool active);
+	event HostUnregistered(address indexed host, string nodeId, bool active);
 	/**
 	 * A smart contract that stores the hosts registered on the network
 	 * @author Ting
@@ -21,7 +21,7 @@ contract YourContract {
 	}
 	// State Variables
 	address public immutable owner;
-	mapping(address => NodeInfo) hostsToInfo;
+	mapping(address => NodeInfo) public hostsToInfo;
 
 	// Constructor: Called once on contract deployment
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
@@ -35,8 +35,8 @@ contract YourContract {
 
 	function registerAsHost(string memory nodeId) public {
 		if(!hostsToInfo[msg.sender].active){
-			hostsToInfo[msg.sender] = NodeInfo(nodeId, 0, true, 0);
-			emit HostRegistered(msg.sender, nodeId);
+			hostsToInfo[msg.sender] = NodeInfo({nodeId: nodeId, balance: 0, active: true, users: 0});
+			emit HostRegistered(msg.sender, nodeId, true);
 		}
 	}
 
@@ -44,7 +44,7 @@ contract YourContract {
 		if(hostsToInfo[msg.sender].active){
 			hostsToInfo[msg.sender].nodeId = "";
 			hostsToInfo[msg.sender].active = false;
-			emit HostUnregistered(msg.sender, nodeId);
+			emit HostUnregistered(msg.sender, nodeId, false);
 		}
 	}
 

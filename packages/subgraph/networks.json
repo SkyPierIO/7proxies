@@ -1,7 +1,12 @@
 {
   "localhost": {
     "YourContract": {
-      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6"
+    }
+  },
+  "goerli": {
+    "YourContract": {
+      "address": "0x4540a8E4f4Ce272e24c6Af5f6b51008b7C8beAE8"
     }
   }
 }

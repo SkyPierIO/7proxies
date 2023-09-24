@@ -24,12 +24,6 @@
         "internalType": "string",
         "name": "nodeId",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "active",
-        "type": "bool"
       }
     ],
     "name": "HostRegistered",
@@ -49,12 +43,6 @@
         "internalType": "string",
         "name": "nodeId",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "active",
-        "type": "bool"
       }
     ],
     "name": "HostUnregistered",
@@ -96,40 +84,6 @@
         "internalType": "struct YourContract.NodeInfo",
         "name": "",
         "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "hostsToInfo",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "nodeId",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "active",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "users",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
