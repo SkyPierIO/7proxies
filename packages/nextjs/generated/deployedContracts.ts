@@ -401,6 +401,226 @@ const contracts = {
       },
     },
   ],
+  314159: [
+    {
+      chainId: "314159",
+      name: "calibration",
+      contracts: {
+        YourContract: {
+          address: "0xd7FB89454788758221bb53B855A0D359F36da93E",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_owner",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "host",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "nodeId",
+                  type: "string",
+                },
+                {
+                  indexed: false,
+                  internalType: "bool",
+                  name: "active",
+                  type: "bool",
+                },
+              ],
+              name: "HostRegistered",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "host",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "nodeId",
+                  type: "string",
+                },
+                {
+                  indexed: false,
+                  internalType: "bool",
+                  name: "active",
+                  type: "bool",
+                },
+              ],
+              name: "HostUnregistered",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "host",
+                  type: "address",
+                },
+              ],
+              name: "canBeAHost",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "host",
+                  type: "address",
+                },
+              ],
+              name: "getHost",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "string",
+                      name: "nodeId",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "balance",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "active",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "users",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct YourContract.NodeInfo",
+                  name: "",
+                  type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "hostsToInfo",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "nodeId",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "balance",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "active",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "users",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "nodeId",
+                  type: "string",
+                },
+              ],
+              name: "registerAsHost",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "nodeId",
+                  type: "string",
+                },
+              ],
+              name: "unregisterAsHost",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "host",
+                  type: "address",
+                },
+              ],
+              name: "useHost",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
+      },
+    },
+  ],
 } as const;
 
 export default contracts;

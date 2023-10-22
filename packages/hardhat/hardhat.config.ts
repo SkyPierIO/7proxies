@@ -26,7 +26,7 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "goerli",
+  defaultNetwork: "calibration",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -112,6 +112,10 @@ const config: HardhatUserConfig = {
     },
     baseGoerli: {
       url: "https://goerli.base.org",
+      accounts: [deployerPrivateKey],
+    },
+    calibration: {
+      url: "https://api.calibration.node.glif.io/rpc/v1",
       accounts: [deployerPrivateKey],
     },
   },
