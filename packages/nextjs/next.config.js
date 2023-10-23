@@ -2,7 +2,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/",
+  assetPrefix: "/",
   reactStrictMode: true,
   trailingSlash: true,
   output: "export",
