@@ -1,14 +1,29 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { NextPage } from "next";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
-const Home: NextPage = ({ nodeId }) => {
-  console.log("id Nest", nodeId);
+const Home: NextPage = () => {
+  const [nodeId, setNodeId] = useState();
   const router = useRouter();
+
+  useEffect(() => {
+    // Transform the code above to use promise
+    axios
+      .get("http://localhost:8081/api/v0/id")
+      .then(response => {
+        if (response.status === 200) {
+          console.log("id Nest", response.data);
+          setNodeId(response.data);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "YourContract",
@@ -31,7 +46,7 @@ const Home: NextPage = ({ nodeId }) => {
               <button
                 className="btn btn-primary rounded-full capitalize font-normal font-white w-24 flex items-center gap-1 hover:gap-2 transition-all tracking-widest"
                 onClick={() => writeAsync()}
-                disabled={isLoading}
+                disabled={isLoading || !nodeId}
               >
                 {isLoading ? (
                   <span className="loading loading-spinner loading-sm"></span>
