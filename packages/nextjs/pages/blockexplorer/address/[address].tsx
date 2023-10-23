@@ -153,43 +153,43 @@ async function fetchByteCodeAndAssembly(buildInfoDirectory: string, contractPath
   return { bytecode, assembly };
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
-  const address = (context.params?.address as string).toLowerCase();
-  const contracts = deployedContracts as GenericContractsDeclaration | null;
-  const chainId = hardhat.id;
-  let contractPath = "";
+// export const getServerSideProps: GetServerSideProps = async context => {
+//   const address = (context.params?.address as string).toLowerCase();
+//   const contracts = deployedContracts as GenericContractsDeclaration | null;
+//   const chainId = hardhat.id;
+//   let contractPath = "";
 
-  const buildInfoDirectory = path.join(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "..",
-    "..",
-    "..",
-    "hardhat",
-    "artifacts",
-    "build-info",
-  );
+//   const buildInfoDirectory = path.join(
+//     __dirname,
+//     "..",
+//     "..",
+//     "..",
+//     "..",
+//     "..",
+//     "..",
+//     "hardhat",
+//     "artifacts",
+//     "build-info",
+//   );
 
-  if (!fs.existsSync(buildInfoDirectory)) {
-    throw new Error(`Directory ${buildInfoDirectory} not found.`);
-  }
+//   if (!fs.existsSync(buildInfoDirectory)) {
+//     throw new Error(`Directory ${buildInfoDirectory} not found.`);
+//   }
 
-  const deployedContractsOnChain = contracts ? contracts[chainId][0].contracts : {};
-  for (const [contractName, contractInfo] of Object.entries(deployedContractsOnChain)) {
-    if (contractInfo.address.toLowerCase() === address) {
-      contractPath = `contracts/${contractName}.sol`;
-      break;
-    }
-  }
+//   const deployedContractsOnChain = contracts ? contracts[chainId][0].contracts : {};
+//   for (const [contractName, contractInfo] of Object.entries(deployedContractsOnChain)) {
+//     if (contractInfo.address.toLowerCase() === address) {
+//       contractPath = `contracts/${contractName}.sol`;
+//       break;
+//     }
+//   }
 
-  if (!contractPath) {
-    // No contract found at this address
-    return { props: { address, contractData: null } };
-  }
+//   if (!contractPath) {
+//     // No contract found at this address
+//     return { props: { address, contractData: null } };
+//   }
 
-  const { bytecode, assembly } = await fetchByteCodeAndAssembly(buildInfoDirectory, contractPath);
+//   const { bytecode, assembly } = await fetchByteCodeAndAssembly(buildInfoDirectory, contractPath);
 
-  return { props: { address, contractData: { bytecode, assembly } } };
-};
+//   return { props: { address, contractData: { bytecode, assembly } } };
+// };
