@@ -55,28 +55,18 @@ export const NodeList = () => {
           <span>You have joined!</span>
         </Alert>
       )}
-      <Table>
-        <Table.Head>
-          <span />
-          <span>Name</span>
-        </Table.Head>
-
-        <Table.Body>
-          {nodesData.data.registrations.map((node: any, index: number) => (
-            <Table.Row
-              key={index}
-              className="flex flex-col px-1 py-1 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary"
-            >
-              <span></span>
-              <span className="text-2xl sm:text-3xl text-black">{node.nodeId}</span>
-              <span></span>
-              <span>
-                <Button onClick={() => join(node.nodeId)}>Join</Button>
-              </span>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
+      {nodesData.data.registrations.map((node: any, index: number) => (
+        <div className="card bg-base-100 shadow-xl m-2" key={index}>
+          <div className="card-body">
+            <h2 className="card-title">{node.nodeId}</h2>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary" onClick={() => join(node.nodeId)}>
+                Join
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
