@@ -17,17 +17,16 @@ export const NodeList = () => {
   const NODES_GQL = gql(NODES_GRAPHQL);
   const nodesData = useQuery(NODES_GQL, { pollInterval: 1000 });
 
-  const join = (nodeId: string) => {
-    setJoined(true);
-    // try {
-    //   const response = await axios.get(`http://localhost:8081/api/v0/forward/${nodeId}`);
-    //   if (response.status === 200) {
-    //     setJoined(true);
-    //   }
-    // } catch (error) {
-    //   setJoined(false);
-    //   console.error(error);
-    // }
+  const join = async (nodeId: string) => {
+    try {
+      const response = await axios.get(`http://localhost:8081/api/v0/forward/${nodeId}`);
+      if (response.status === 200) {
+        setJoined(true);
+      }
+    } catch (error) {
+      setJoined(false);
+      console.error(error);
+    }
   };
 
   return nodesData.loading ? (
