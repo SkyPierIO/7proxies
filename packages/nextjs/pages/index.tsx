@@ -1,13 +1,31 @@
 import { useCallback } from "react";
 import Link from "next/link";
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import { ModalSteps } from "~~/components/host/ModalSteps";
+import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
+  const { address } = useAccount();
+
   const beAHost = useCallback(() => {
     document.getElementById("my_modal_1").showModal();
   }, []);
+
+  if (!address) {
+    return (
+      <div className="hero min-h-screen bg-base-200" style={{ backgroundColor: "#f2f2f2" }}>
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">Skypea</h1>
+            <p className="py-6">Please connect your wallet to be able to use the app.</p>
+            <RainbowKitCustomConnectButton />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">

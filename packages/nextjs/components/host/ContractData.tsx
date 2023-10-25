@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useAccount } from "wagmi";
-import {
-  useAnimationConfig,
-  useScaffoldContract,
-  useScaffoldContractRead,
-} from "~~/hooks/scaffold-eth";
+import { useAnimationConfig, useScaffoldContract, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const MARQUEE_PERIOD_IN_SEC = 5;
 
-export const ContractData = ({hostData}) => {
+export const ContractData = ({ hostData }: any) => {
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [isRightDirection, setIsRightDirection] = useState(false);
   const [marqueeSpeed, setMarqueeSpeed] = useState(0);
@@ -62,8 +58,7 @@ export const ContractData = ({hostData}) => {
         <div className="mt-3 border border-primary bg-neutral rounded-3xl text-secondary  overflow-hidden text-[116px] whitespace-nowrap w-full uppercase tracking-tighter font-bai-jamjuree leading-tight">
           <div className="relative overflow-x-hidden" ref={containerRef}>
             {/* for speed calculating purposes */}
-            <div className="absolute -left-[9999rem]" ref={greetingRef}>
-            </div>
+            <div className="absolute -left-[9999rem]" ref={greetingRef}></div>
           </div>
         </div>
 

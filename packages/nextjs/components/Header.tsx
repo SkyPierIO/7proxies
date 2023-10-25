@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAccount } from "wagmi";
 import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
@@ -27,6 +28,7 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
  * Site header
  */
 export const Header = () => {
+  const { address } = useAccount();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
   useOutsideClick(
@@ -34,37 +36,41 @@ export const Header = () => {
     useCallback(() => setIsDrawerOpen(false), []),
   );
 
-  const navLinks = (
-    <>
-      <li>
-        <NavLink href="/">Home</NavLink>
-      </li>
-      {/* <li>
-        <NavLink href="/debug">
-          <BugAntIcon className="h-4 w-4" />
-          Debug Contracts
-        </NavLink>
-      </li> */}
-      <li>
-        <NavLink href="/host">
-          <SparklesIcon className="h-4 w-4" />
-          Host
-        </NavLink>
-      </li>
-      <li>
-        <NavLink href="/example-ui">
-          <SparklesIcon className="h-4 w-4" />
-          Client
-        </NavLink>
-      </li>
-      {/* <li>
-        <NavLink href="/blockexplorer">
-          <MagnifyingGlassIcon className="h-4 w-4" />
-          Block Explorer
-        </NavLink>
-      </li> */}
-    </>
-  );
+  const navLinks = () => {
+    if (address) {
+      return (
+        <>
+          <li>
+            <NavLink href="/">Home</NavLink>
+          </li>
+          {/* <li>
+            <NavLink href="/debug">
+              <BugAntIcon className="h-4 w-4" />
+              Debug Contracts
+            </NavLink>
+          </li> */}
+          <li>
+            <NavLink href="/host">
+              <SparklesIcon className="h-4 w-4" />
+              Host
+            </NavLink>
+          </li>
+          <li>
+            <NavLink href="/example-ui">
+              <SparklesIcon className="h-4 w-4" />
+              Client
+            </NavLink>
+          </li>
+          {/* <li>
+            <NavLink href="/blockexplorer">
+              <MagnifyingGlassIcon className="h-4 w-4" />
+              Block Explorer
+            </NavLink>
+          </li> */}
+        </>
+      );
+    }
+  };
 
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
@@ -87,7 +93,7 @@ export const Header = () => {
                 setIsDrawerOpen(false);
               }}
             >
-              {navLinks}
+              {navLinks()}
             </ul>
           )}
         </div>
@@ -100,7 +106,7 @@ export const Header = () => {
             <span className="text-xs">Infraestructure solution</span>
           </div>
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
+        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks()}</ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
         <RainbowKitCustomConnectButton />
