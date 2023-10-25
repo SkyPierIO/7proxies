@@ -1,3 +1,4 @@
+import { Button } from "../ui/Button";
 import { PublicLockV13 } from "@unlock-protocol/contracts";
 import networks from "@unlock-protocol/networks";
 import { Paywall } from "@unlock-protocol/paywall";
@@ -97,12 +98,12 @@ const Checkout = ({ network }: { network: number }) => {
   return (
     <section>
       <p className="mb-4">You currently don't have a membership... </p>
-      <button
+      <Button
         onClick={() => checkout()}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Purchase one now!
-      </button>
+      </Button>
     </section>
   );
 };

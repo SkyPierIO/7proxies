@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import axios from "axios";
-import { Alert, Button, Table } from "react-daisyui";
+import { Alert } from "react-daisyui";
+import { Button } from "~~/components/ui/Button";
 
 export const NodeList = () => {
   const [joined, setJoined] = useState(false);
@@ -32,7 +33,7 @@ export const NodeList = () => {
   return nodesData.loading ? (
     <div>Loading...</div>
   ) : (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto grid lg:grid-cols-2 flex-grow">
       {joined && (
         <Alert
           status={"success"}
@@ -58,11 +59,13 @@ export const NodeList = () => {
       {nodesData.data.registrations.map((node: any, index: number) => (
         <div className="card bg-base-100 shadow-xl m-2" key={index}>
           <div className="card-body">
-            <h2 className="card-title">{node.nodeId}</h2>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary" onClick={() => join(node.nodeId)}>
-                Join
-              </button>
+            <h3 className="card-title text-base">{node.nodeId}</h3>
+            <div className="card-actions justify-between">
+              <div>
+                <div className="badge badge-accent mr-2">France</div>
+                <div className="badge badge-neutral">Online</div>
+              </div>
+              <Button onClick={() => join(node.nodeId)}>Join</Button>
             </div>
           </div>
         </div>

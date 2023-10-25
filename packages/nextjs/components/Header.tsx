@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import { useAccount } from "wagmi";
 import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
@@ -28,6 +29,7 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
  * Site header
  */
 export const Header = () => {
+  const hostInfo = useSelector(state => state.host);
   const { address } = useAccount();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
@@ -49,12 +51,14 @@ export const Header = () => {
               Debug Contracts
             </NavLink>
           </li> */}
-          <li>
-            <NavLink href="/host">
-              <SparklesIcon className="h-4 w-4" />
-              Host
-            </NavLink>
-          </li>
+          {hostInfo && (
+            <li>
+              <NavLink href="/host">
+                <SparklesIcon className="h-4 w-4" />
+                Host
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink href="/example-ui">
               <SparklesIcon className="h-4 w-4" />
