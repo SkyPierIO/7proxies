@@ -61,27 +61,6 @@ export const ContractData = ({ hostData }: any) => {
             <div className="absolute -left-[9999rem]" ref={greetingRef}></div>
           </div>
         </div>
-
-        <div className="mt-3 flex items-end justify-between">
-          <button
-            className={`btn btn-circle btn-ghost border border-primary hover:border-primary w-12 h-12 p-1 bg-neutral flex items-center ${
-              isRightDirection ? "justify-start" : "justify-end"
-            }`}
-            onClick={() => {
-              if (transitionEnabled) {
-                setIsRightDirection(!isRightDirection);
-              }
-            }}
-          >
-            <div className="border border-primary rounded-full bg-secondary w-2 h-2" />
-          </button>
-          <div className="w-44 p-0.5 flex items-center bg-neutral border border-primary rounded-full">
-            <div
-              className="h-1.5 border border-primary rounded-full bg-secondary animate-grow"
-              style={{ animationPlayState: showTransition ? "running" : "paused" }}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

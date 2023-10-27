@@ -26,8 +26,8 @@ export const withInitialData = WrappedComponent => {
     if (!address) {
       return (
         <div className="hero min-h-screen bg-base-200" style={{ backgroundColor: "#f2f2f2" }}>
-          <div className="hero-content text-center">
-            <div className="max-w-md">
+          <div className="hero-content text-center p-4">
+            <div className="max-w-md" style={{ margin: "auto" }}>
               <h1 className="text-5xl font-bold">Skypea</h1>
               <p className="py-6">Please connect your wallet to be able to use the app.</p>
               <RainbowKitCustomConnectButton />

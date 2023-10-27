@@ -70,13 +70,16 @@ export const ModalSteps = () => {
             </a>
           </li>
           <li>
-            Please download and install the plugin corresponding to your Operating System{" "}
-            <a target="_blank" href="https://github.com/dProxSocks/kubo-socks/releases/tag/v0.1.1">
+            Please download and install latest release of the plugin corresponding to your Operating System{" "}
+            <a target="_blank" href="https://github.com/dProxSocks/kubo-socks/releases">
               Kubo-socks
             </a>
           </li>
           <li>
-            Please run the following commands <code>kubo daemon</code> and <code>kubo-socks5</code>
+            Please run the following commands <code>ipfs daemon</code> and <code>kubo-socks5</code>
+          </li>
+          <li>
+            For Linux User* add <code>ipfs config --json Experimental.Libp2pStreamMounting true</code>
           </li>
           <li>Please confirm the daemon and the plugin are running</li>
         </ol>
