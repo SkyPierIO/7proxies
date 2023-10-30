@@ -57,6 +57,17 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
             <div className="flex flex-col min-h-screen">
               <Header />
               <main className="relative flex flex-col flex-1 p-8">
+                <p>
+                  Please read this{" "}
+                  <a
+                    href="https://www.notion.so/tinglik/UX-Journey-MVP-b224a9c0ed6b48cb93e20a38d58857c9"
+                    target="_blank"
+                    style={{ textDecoration: "underline" }}
+                  >
+                    notion document
+                  </a>{" "}
+                  to be able to use the service
+                </p>
                 <EnhancedComponent />
               </main>
               <Footer />
