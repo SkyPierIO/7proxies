@@ -45,7 +45,7 @@ export const NodeList = () => {
       {nodesData.data.registrations
         .filter(
           (node: any, index: any, self: any) =>
-            node.nodeId && index === self.findIndex(item => item.nodeId === node.nodeId),
+            node.nodeId && node.nodeId.length > 10 && index === self.findIndex(item => item.nodeId === node.nodeId),
         )
         .map((node: any, index: number) => (
           <div className="card bg-base-100 shadow-xl m-2" key={index}>
