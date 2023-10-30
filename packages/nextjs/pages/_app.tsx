@@ -60,7 +60,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
                 <p>
                   Please read this{" "}
                   <a
-                    href="https://www.notion.so/tinglik/UX-Journey-MVP-b224a9c0ed6b48cb93e20a38d58857c9"
+                    href="https://www.notion.so/tinglik/On-boarding-7-Proxies-Network-0967d277dfee49dfb2e537a1b89961b6?pvs=4"
                     target="_blank"
                     style={{ textDecoration: "underline" }}
                   >
