@@ -1,14 +1,13 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Button } from "../ui/Button";
 import axios from "axios";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
 
-export const ModalSteps = () => {
+export const ModalSteps = forwardRef((props, ref) => {
   const [nodeId, setNodeId] = useState();
   const router = useRouter();
-  const dialogRef = useRef<RefObject<HTMLDivElement> | undefined>();
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "YourContract",
@@ -44,12 +43,12 @@ export const ModalSteps = () => {
     const nodeId = await validateNodeId();
     if (nodeId) {
       setNodeId(nodeId);
-      dialogRef.current.close();
+      ref.current.close();
     }
-  }, [validateNodeId]);
+  }, [ref, validateNodeId]);
 
   return (
-    <dialog ref={dialogRef} id="my_modal_1" className="modal">
+    <dialog ref={ref} id="my_modal_1" className="modal">
       <div className="modal-box">
         <form method="dialog">
           {/* if there is a button in form, it will close the modal */}
@@ -79,7 +78,7 @@ export const ModalSteps = () => {
             Please run the following commands <code>ipfs daemon</code> and <code>kubo-socks5</code>
           </li>
           <li>
-            For Linux User* add <code>ipfs config --json Experimental.Libp2pStreamMounting true</code>
+            run <code>ipfs config --json Experimental.Libp2pStreamMounting true</code>
           </li>
           <li>Please confirm the daemon and the plugin are running</li>
         </ol>
@@ -89,4 +88,6 @@ export const ModalSteps = () => {
       </div>
     </dialog>
   );
-};
+});
+
+ModalSteps.displayName = "ModalSteps";

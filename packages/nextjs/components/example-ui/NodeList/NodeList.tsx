@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { RefObject, useRef, useState } from "react";
+import { JoinSteps } from "./JoinSteps";
 import { gql, useQuery } from "@apollo/client";
 import axios from "axios";
-import { Alert } from "react-daisyui";
 import { Button } from "~~/components/ui/Button";
+import { notification } from "~~/utils/scaffold-eth";
 
 export const NodeList = () => {
-  const [joined, setJoined] = useState(false);
+  const dialogRef = useRef<RefObject<HTMLDivElement> | undefined>();
+  const [vpnData, setVpnData] = useState<any>({});
   const NODES_GRAPHQL = `
   {
-    registrations(orderBy: createdAt) {
+    registrations(filter: { active: true }, orderBy: createdAt) {
       address
     	nodeId
     }
@@ -22,11 +24,16 @@ export const NodeList = () => {
     try {
       const response = await axios.get(`http://localhost:8081/api/v0/forward/${nodeId}`);
       if (response.status === 200) {
-        setJoined(true);
+        if (response.data.Success) {
+          setVpnData(response.data);
+          dialogRef.current.showModal();
+        } else {
+          notification.success("The node is not available. Please try again later.");
+        }
       }
     } catch (error) {
-      setJoined(false);
       console.error(error);
+      notification.error("There was an error getting the data of the node. Please try again later.");
     }
   };
 
@@ -34,42 +41,22 @@ export const NodeList = () => {
     <div>Loading...</div>
   ) : (
     <div className="overflow-x-auto grid lg:grid-cols-2 flex-grow">
-      {joined && (
-        <Alert
-          status={"success"}
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="stroke-current shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          }
-        >
-          <span>You have joined!</span>
-        </Alert>
-      )}
-      {nodesData.data.registrations.map((node: any, index: number) => (
-        <div className="card bg-base-100 shadow-xl m-2" key={index}>
-          <div className="card-body">
-            <h3 className="card-title text-base">{node.nodeId}</h3>
-            <div className="card-actions justify-between">
-              <div>
-                <div className="badge badge-accent mr-2">France</div>
-                <div className="badge badge-neutral">Online</div>
+      <JoinSteps ref={dialogRef} vpnData={vpnData} />
+      {nodesData.data.registrations
+        .filter(
+          (node: any, index: any, self: any) =>
+            node.nodeId && index === self.findIndex(item => item.nodeId === node.nodeId),
+        )
+        .map((node: any, index: number) => (
+          <div className="card bg-base-100 shadow-xl m-2" key={index}>
+            <div className="card-body">
+              <h3 className="card-title text-base">{node.nodeId}</h3>
+              <div className="card-actions justify-between">
+                <Button onClick={() => join(node.nodeId)}>Join</Button>
               </div>
-              <Button onClick={() => join(node.nodeId)}>Join</Button>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

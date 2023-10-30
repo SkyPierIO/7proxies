@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useSelector } from "react-redux";
@@ -7,15 +7,16 @@ import { ModalSteps } from "~~/components/host/ModalSteps";
 import { Button } from "~~/components/ui/Button";
 
 const Home: NextPage = () => {
-  const hostInfo = useSelector(state => state.host);
+  const dialogRef = useRef<RefObject<HTMLDivElement> | undefined>();
+  const hostInfo = useSelector((state: any) => state.host);
 
   const beAHost = useCallback(() => {
-    document.getElementById("my_modal_1").showModal();
+    dialogRef.current.showModal();
   }, []);
 
   return (
     <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
-      <ModalSteps />
+      <ModalSteps ref={dialogRef} />
       {!hostInfo && (
         <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
           <span className="text-4xl sm:text-6xl text-black">Be a host</span>
