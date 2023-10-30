@@ -20,7 +20,9 @@ const Home: NextPage = () => {
       {!hostInfo && (
         <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
           <span className="text-4xl sm:text-6xl text-black">Be a host</span>
-
+          <p>
+            Take part of the network by running a node and start earning crypto.
+          </p>
           <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-5">
             <div className="flex rounded-full border border-primary p-1 flex-shrink-0">
               <div className="flex rounded-full border-2 border-primary p-1">
@@ -34,7 +36,9 @@ const Home: NextPage = () => {
       )}
       <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
         <span className="text-4xl sm:text-6xl text-black">Join a host</span>
-
+        <p>
+          Find nodes over the IPFS network and use them to proxify your connection.
+        </p>
         <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-5">
           <div className="flex rounded-full border border-primary p-1 flex-shrink-0">
             <div className="flex rounded-full border-2 border-primary p-1">
