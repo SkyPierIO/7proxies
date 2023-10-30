@@ -75,11 +75,11 @@ export const ModalSteps = forwardRef((props, ref) => {
             </a>
           </li>
           <li>
-            Please run the following commands <code>ipfs daemon</code> and <code>kubo-socks5</code>
+            Please run the following commands <code>ipfs daemon</code> and <code>kubo-socks</code>
           </li>
-          <li>
+          {/* <li>
             run <code>ipfs config --json Experimental.Libp2pStreamMounting true</code>
-          </li>
+          </li> */}
           <li>Please confirm the daemon and the plugin are running</li>
         </ol>
         <div className="modal-action">
