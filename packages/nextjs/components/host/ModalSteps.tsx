@@ -80,7 +80,7 @@ export const ModalSteps = forwardRef((props, ref) => {
           {/* <li>
             run <code>ipfs config --json Experimental.Libp2pStreamMounting true</code>
           </li> */}
-          <li>Please confirm the daemon and the plugin are running</li>
+          <li>Please confirm your IPFS node and the plug-in are running.</li>
         </ol>
         <div className="modal-action">
           <Button onClick={beAHost}>Be a Host</Button>

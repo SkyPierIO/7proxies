@@ -58,15 +58,15 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
               <Header />
               <main className="relative flex flex-col flex-1 p-8">
                 <p>
-                  Please read this{" "}
+                Please on-board by following this{" "}
                   <a
                     href="https://www.notion.so/tinglik/On-boarding-7-Proxies-Network-0967d277dfee49dfb2e537a1b89961b6?pvs=4"
                     target="_blank"
                     style={{ textDecoration: "underline" }}
                   >
-                    notion document
+                    notion guide
                   </a>{" "}
-                  to be able to use the service
+                  first!
                 </p>
                 <EnhancedComponent />
               </main>
