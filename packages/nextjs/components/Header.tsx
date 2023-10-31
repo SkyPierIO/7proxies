@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useAccount } from "wagmi";
-import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, ServerStackIcon, GlobeEuropeAfricaIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -54,14 +54,14 @@ export const Header = () => {
           {hostInfo && (
             <li>
               <NavLink href="/host">
-                <SparklesIcon className="h-4 w-4" />
+                <ServerStackIcon className="h-4 w-4" />
                 Host
               </NavLink>
             </li>
           )}
           <li>
             <NavLink href="/example-ui">
-              <SparklesIcon className="h-4 w-4" />
+              <GlobeEuropeAfricaIcon className="h-4 w-4" />
               Client
             </NavLink>
           </li>
@@ -102,9 +102,12 @@ export const Header = () => {
           )}
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
+          <div className="flex relative w-10 h-10">
+            <Image alt="SE2 logo" className="cursor-pointer" fill src="https://avatars.githubusercontent.com/u/145208723?s=400&u=6eae4ca3fa1df85d277958c826ed152e8ed15064&v=4" />
+          </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">7proxies</span>
-            <span className="text-xs">Infraestructure solution</span>
+            <span className="font-bold leading-tight">Skypiea</span>
+            <span className="text-xs">Infrastructure solution</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks()}</ul>
